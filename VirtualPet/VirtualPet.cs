@@ -170,10 +170,10 @@ namespace VirtualPet
         public void LevelUp(int enemyHP)
         {
             Random randStats = new Random();
-            int happinessUp = randStats.Next(1, 5);
+            int happinessUp = randStats.Next(1, 6);
             int attackUp = Convert.ToInt32(0.03 * (enemyHP + randStats.Next(0, 2 * happiness)));
             int hpUp = Convert.ToInt32(0.05 * (enemyHP + randStats.Next(0, 3 * happiness)));
-            int apUp = randStats.Next(0, 1);
+            int apUp = randStats.Next(0, 2);
 
             happiness += happinessUp;
             attack += attackUp;
@@ -231,8 +231,88 @@ namespace VirtualPet
                 happiness -= 2;
             }
 
+            if (happiness < 1)
+            {
+                happiness = 1;
+            }
+
             Console.WriteLine("\n\nPress any key to continue.");
             Console.ReadKey();
+        }
+
+        //Runs when you take a day off
+        public void Tick(Inventory Backpack)
+        {
+            Console.Clear();
+            Random randEvent = new Random();
+            int dayOff = randEvent.Next(1, 13);
+            if (dayOff < 5)
+            {
+                WriteName();
+                Console.WriteLine(" hung around the house all day looking bored.\n");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+                happiness--;
+            }
+            else if (dayOff < 9)
+            {
+                WriteName();
+                Console.WriteLine(" wandered off for the day and came back later.\n");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+            else if (dayOff == 9)
+            {
+                WriteName();
+                Console.WriteLine(" went for a walk and came back looking scratched up!\n");
+                happiness--;
+                hp -= randEvent.Next(5, 11);
+
+                if (hp < 0)
+                {
+                    WriteName();
+                    Console.WriteLine(" fainted! You rush to the Pokémon Center and pay $" + Backpack.PokemonCenter() + " for treatment.\n");
+                    Faint();
+                }
+
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+            else if (dayOff == 10)
+            {
+                WriteName();
+                Console.WriteLine(" wandered off for the day and came back looking happy and energetic!\n");
+                happiness++;
+                hp += randEvent.Next(5, 11);
+                if (hp > hpMax)
+                {
+                    hp = hpMax;
+                }
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+            else if (dayOff == 11)
+            {
+                WriteName();
+                Console.WriteLine(" went out for a walk and came back holding something.\n");
+                Backpack.RandomFind(randEvent.Next(1, 6));
+
+            }
+            else if (dayOff == 12)
+            {
+                WriteName();
+                Console.WriteLine(" went out for a walk and came back holding something.\n");
+                int money = randEvent.Next(50, 100);
+                Backpack.GetMoney(money);
+                Console.WriteLine("Got $" + money + "!\n");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+
+            if (happiness < 1)
+            {
+                happiness = 1;
+            }
         }
 
         //HP restoration from potions, elixirs, and day-off events
@@ -275,7 +355,11 @@ namespace VirtualPet
         public void Run()
         {
             Random run = new Random();
-            happiness -= run.Next(1, 5);
+            happiness -= run.Next(1, 6);
+            if (happiness < 1)
+            {
+                happiness = 1;
+            }
         }
 
         //Run when the Pokémon faints. Halves happiness, then restores health
@@ -285,6 +369,10 @@ namespace VirtualPet
             happiness = Convert.ToInt32(happiness / 2);
             hp = hpMax;
             ap = apMax;
+            if (happiness < 1)
+            {
+                happiness = 1;
+            }
         }
 
         //Writes the Pokémon's name in their color, then resets color

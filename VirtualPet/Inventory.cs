@@ -177,6 +177,29 @@ namespace VirtualPet
             }
         }
 
+        //Used when your Pokémon finds an item
+        public void RandomFind(int rand)
+        {
+            if (rand < 3)
+            {
+                Console.WriteLine("You got a potion!\n");
+                potions++;
+            }
+            else if (rand < 5)
+            {
+                Console.WriteLine("You got an ether!\n");
+                ethers++;
+            }
+            else if (rand == 5)
+            {
+                Console.WriteLine("You got an elixir!\n");
+                elixirs++;
+            }
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+        }
+
         //Finding money after a battle. Parameter is amount found
         public void GetMoney(int found)
         {

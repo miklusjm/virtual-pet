@@ -87,7 +87,7 @@ namespace VirtualPet
                 }
                 else if (choice == "3")
                 {
-                    DayOff();
+                    Monster.Tick(Backpack);
                 }
                 else if (choice == "4")
                 {
@@ -101,7 +101,15 @@ namespace VirtualPet
                 }
                 else if (choice == "6")
                 {
-                    mainLoop = false;
+                    Console.Clear();
+                    Console.WriteLine("Are you sure you want to quit?/n");
+                    Console.WriteLine("1.) Yes");
+                    Console.WriteLine("2.) No");
+                    string input = Console.ReadLine();
+                    if (input == "1")
+                    {
+                        mainLoop = false;
+                    }
                 }
                 else
                 {
@@ -354,13 +362,5 @@ namespace VirtualPet
             //Absolute value produces the distance away from the center
             return Math.Abs(current - 56);
         }
-
-        static void DayOff()
-        {
-            Console.Clear();
-            Console.WriteLine("Day off!");
-            Console.ReadKey();
-        }
-
     }
 }
