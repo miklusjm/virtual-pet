@@ -102,9 +102,10 @@ namespace VirtualPet
                 else if (choice == "6")
                 {
                     Console.Clear();
-                    Console.WriteLine("Are you sure you want to quit?/n");
+                    Console.WriteLine("Are you sure you want to quit?\n");
                     Console.WriteLine("1.) Yes");
-                    Console.WriteLine("2.) No");
+                    Console.WriteLine("2.) No\n");
+                    Console.Write("Enter your choice: ");
                     string input = Console.ReadLine();
                     if (input == "1")
                     {
