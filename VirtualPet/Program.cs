@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace VirtualPet
     {
         static void Main(string[] args)
         {
+            
             Console.Clear();
             Console.WriteLine("Pokémon C#");
             Console.WriteLine("\n************\n");
@@ -81,7 +83,7 @@ namespace VirtualPet
                 }
                 else if (choice == "2")
                 {
-                    Train();
+                    Train(Monster);
                 }
                 else if (choice == "3")
                 {
@@ -272,11 +274,85 @@ namespace VirtualPet
 
         }
 
-        static void Train()
+        static void Train(VirtualPet Monster)
+        {
+            int score = 0;
+            Console.Clear();
+            Console.Write("Get ready for training! Press any key when the ");
+            Monster.Color();
+            Console.Write("*");
+            Console.ResetColor();
+            Console.Write(" is right in the center of the lines!\n\n");
+            Console.WriteLine("Press any key to start!");
+            Console.ReadKey();
+            score += Game(15, Monster);
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Let's try it a little faster...\n");
+            Console.WriteLine("Press any key to start!");
+            Console.ReadKey();
+            score += Game(8, Monster);
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("And one more time...\n");
+            Console.WriteLine("Press any key to start!");
+            Console.ReadKey();
+            score += Game(2, Monster);
+            Console.ReadKey();
+            Console.Clear();
+            Monster.Training(score);
+
+        }
+
+        //Method for the timing game
+        //The difficulty parameter is the number of milliseconds to wait
+        //between redrawing the console. Lower = harder!
+        static int Game(int difficulty, VirtualPet Monster)
         {
             Console.Clear();
-            Console.WriteLine("Training!");
-            Console.ReadKey();
+            int x = 0;
+            int current = 0;
+
+            while (!Console.KeyAvailable)
+            {
+                Console.WriteLine();
+
+                for (x = 35; !Console.KeyAvailable && x <= 85 ; x++)
+                {
+                    Console.Clear();
+                    Console.WriteLine("                                                       |"); // 55
+                    for (int y = 1; y < x && !Console.KeyAvailable; y++)
+                    {
+                        Console.Write(" ");
+                    }
+                    Monster.Color();
+                    Console.Write("*\n");
+                    Console.ResetColor();
+                    Console.WriteLine("                                                       |");
+                    Thread.Sleep(difficulty);
+                    Console.Clear();
+                    current = x;
+                }
+
+                for (x = 84; !Console.KeyAvailable && x >= 36 ; x--)
+                {
+                    Console.WriteLine("                                                       |");
+                    for (int y = 1; y < x && !Console.KeyAvailable; y++)
+                    {
+                        Console.Write(" ");
+                    }
+                    Monster.Color();
+                    Console.Write("*\n");
+                    Console.ResetColor();
+                    Console.WriteLine("                                                       |");
+                    Thread.Sleep(difficulty);
+                    Console.Clear();
+                    current = x;
+                }
+            }
+
+            //Absolute value produces the distance away from the center
+            return Math.Abs(current - 56);
         }
 
         static void DayOff()

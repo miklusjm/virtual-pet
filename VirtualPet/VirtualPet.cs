@@ -197,7 +197,45 @@ namespace VirtualPet
             }
         }
 
-        //HP restoration from potions and elixirs
+        //Stat adjustments after training
+        public void Training(int score)
+        {
+            Console.Clear();
+            Console.WriteLine("Your score was " + score + ". The lower the better!\n");
+            if (score < 5)
+            {
+                WriteName();
+                Console.Write(" got a great workout!");
+                hpMax++;
+                attack++;
+                happiness++;
+            }
+            else if (score < 10)
+            {
+                WriteName();
+                Console.Write(" got a good workout.");
+                hpMax++;
+                attack++;
+            }
+            else if (score < 15)
+            {
+                WriteName();
+                Console.Write(" got a bit stronger, but wants to do better...");
+                happiness--;
+                hpMax++;
+            }
+            else
+            {
+                WriteName();
+                Console.Write(" looks pretty beat after that one...");
+                happiness -= 2;
+            }
+
+            Console.WriteLine("\n\nPress any key to continue.");
+            Console.ReadKey();
+        }
+
+        //HP restoration from potions, elixirs, and day-off events
         //Parameter is the amount healed
         public void Heal(int amount)
         {
@@ -215,7 +253,7 @@ namespace VirtualPet
             }
         }
 
-        //AP restoration from ethers and elixirs
+        //AP restoration from ethers, elixirs, and day-off events
         //Parameter is the amount restored
         public void Recover(int amount)
         {
