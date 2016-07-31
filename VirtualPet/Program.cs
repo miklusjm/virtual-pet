@@ -11,7 +11,7 @@ namespace VirtualPet
     {
         static void Main(string[] args)
         {
-            
+            //Intro screen
             Console.Clear();
             Console.WriteLine("Pokémon C#");
             Console.WriteLine("\n************\n");
@@ -47,8 +47,10 @@ namespace VirtualPet
                 }
             }
 
-            //Creates a Pokémon based on the input above.
+            //Creates a Pokémon VirtualPet object based on the input above
             VirtualPet Monster = new VirtualPet(type);
+
+            //Creates a new inventory with 2 potions and $500
             Inventory Backpack = new Inventory();
 
             Console.Clear();
@@ -58,6 +60,7 @@ namespace VirtualPet
             Console.WriteLine("Press any key to start your adventure!");
             Console.ReadKey();
 
+            //The main loop that controls all gameplay
             bool mainLoop = true;
             while (mainLoop == true)
             {
@@ -79,28 +82,34 @@ namespace VirtualPet
 
                 if (choice == "1")
                 {
+                    //Fight method -- RPG-style combat
                     Fight(Monster, Backpack);
                 }
                 else if (choice == "2")
                 {
+                    //Training method -- timing game
                     Train(Monster);
                 }
                 else if (choice == "3")
                 {
+                    //Day off method -- dice roll for a random event
                     Monster.Tick(Backpack);
                 }
                 else if (choice == "4")
                 {
+                    //Use an item on your Pokémon
                     //The boolean is passed here because it's needed
                     //when this method is called during combat
                     Backpack.UseItem(Monster, false);
                 }
                 else if (choice == "5")
                 {
+                    //Buy an item for your inventory
                     Backpack.BuyItem();
                 }
                 else if (choice == "6")
                 {
+                    //Quit check
                     Console.Clear();
                     Console.WriteLine("Are you sure you want to quit?\n");
                     Console.WriteLine("1.) Yes");
@@ -120,11 +129,13 @@ namespace VirtualPet
             }
         }
 
+        //Method controlling combat
+        //One of three types of enemy Pokémon are generated based on your Pokémon's toughness
         static void Fight(VirtualPet Monster, Inventory Backpack)
         {
             string enemyType = "";
             Random rand = new Random();
-            int selector = rand.Next(1, 3);
+            int selector = rand.Next(1, 4);
 
             if (selector == 1)
             {
@@ -195,6 +206,7 @@ namespace VirtualPet
                     else if (control == "3")
                     {
                         Console.Clear();
+                        //yourTurn is toggled in the method only if you use an item
                         Backpack.UseItem(Monster, yourTurn);
                     }
                     //Try to run
@@ -252,6 +264,7 @@ namespace VirtualPet
             {
                 //Do nothing, just return to the main menu
             }
+            //Victory!
             else if (enemyHP <= 0)
             {
                 Console.Clear();
@@ -266,6 +279,7 @@ namespace VirtualPet
                 Console.WriteLine("Press any key to continue.");
                 Console.ReadKey();
             }
+            //Defeat...
             else if (Monster.HP() <= 0)
             {
                 Console.Clear();
@@ -283,6 +297,7 @@ namespace VirtualPet
 
         }
 
+        //Timing mini-game for training
         static void Train(VirtualPet Monster)
         {
             int score = 0;
