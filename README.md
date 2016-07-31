@@ -9,7 +9,7 @@ TODO
 
 (I probably won't do these unless there is an assignment to add onto this, but these are things that came to mind.)
 
-Include ASCII art of each Pokémon
-Switch enemy Pokémon generation to a class instead of in the main method
+Include ASCII art of each Pokémon.
+Switch enemy Pokémon generation to a class instead of in the main method.
 Standardize methods ("Press any key to continue" ALWAYS or NEVER in methods, console positioning, etc.)
-Let you catch Pokémon, of course
+Let you catch Pokémon, of course.
